@@ -7,7 +7,7 @@ contract MillionairesProblem {
 	// Stores Millionaire structs (defined below)
 	Millionaire[] millionaires; 
 	// Stores address of richest millionaire; set in callback function below
-	address public richestMillionaire; 
+	uint public value; 
 	address public owner;
 	address public enigma;
 
@@ -60,28 +60,20 @@ contract MillionairesProblem {
 	CALLABLE FUNCTION run in SGX to decipher encrypted net worths to 
 	determine richest millionaire
 	*/
-	function computeRichest(address[] _addresses, uint[] _netWorths) 
+	function saveValue(uint _val) 
 		public 
 		pure 
-		returns (address) 
+		returns (uint) 
 	{
-		uint maxIndex; 
-		uint maxValue; 
-		for (uint i = 0; i < _netWorths.length; i++) {
-			if (_netWorths[i] >= maxValue) {
-				maxValue = _netWorths[i]; 
-				maxIndex = i; 
-			}
-		}
-		return _addresses[maxIndex]; 
+		return _val;
 	}
 
 	/*
 	CALLBACK FUNCTION to change contract state tracking richest 
 	millionaire's name
 	*/
-	function setRichestAddress(address _address) public onlyEnigma() {
-		richestMillionaire = _address; 
+	function setValue(uint _val) public onlyEnigma() {
+		value = _val; 
 		emit CallbackFinished(); 
 	}
 }

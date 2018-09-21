@@ -6,8 +6,8 @@ import { Message } from "semantic-ui-react";
 import AddMillionaireDialog from "./AddMillionaireDialog";
 const engUtils = require("./lib/enigma-utils");
 // Specify the signature for the callable and callback functions, make sure there are NO spaces
-const CALLABLE = "computeRichest(address[],uint[])";
-const CALLBACK = "setRichestAddress(address)";
+const CALLABLE = "saveValue(uint)";
+const CALLBACK = "setValue(uint)";
 const ENG_FEE = 1;
 const GAS = "1000000";
 
@@ -53,6 +53,12 @@ class MillionairesProblemWrapper extends Component {
 	(address and net worth) in this function and pass in those values to the contract
 	*/
 	async addMillionaire(address, netWorth) {
+		console.log(typeof netWorth);
+		console.log(netWorth);
+		netWorth = parseInt(netWorth);
+		console.log(typeof netWorth);
+		console.log(netWorth);
+		netWorth = 10;
 		let encryptedAddress = getEncryptedValue(address);
 		let encryptedNetWorth = getEncryptedValue(netWorth);
 		await this.props.millionairesProblem.addMillionaire(
@@ -69,29 +75,31 @@ class MillionairesProblemWrapper extends Component {
 	Creates an Enigma task to be computed by the network.
 	*/
 	async enigmaTask() {
-		let numMillionaires = await this.props.millionairesProblem.numMillionaires.call();
-		let encryptedAddresses = [];
-		let encryptedNetWorths = [];
-		// Loop through each millionaire to construct a list of encrypted addresses and net worths
-		for (let i = 0; i < numMillionaires; i++) {
-			// Obtain the encrypted address and net worth for a particular millionaire
-			let encryptedValue = await this.props.millionairesProblem.getInfoForMillionaire.call(
-				i
-			);
-			encryptedAddresses.push(encryptedValue[0]);
-			encryptedNetWorths.push(encryptedValue[1]);
-		}
-		let blockNumber = await this.props.enigmaSetup.web3.eth.getBlockNumber();
+		// let numMillionaires = await this.props.millionairesProblem.numMillionaires.call();
+		// let encryptedAddresses = [];
+		// let encryptedNetWorths = [];
+		// // Loop through each millionaire to construct a list of encrypted addresses and net worths
+		// for (let i = 0; i < numMillionaires; i++) {
+		// 	// Obtain the encrypted address and net worth for a particular millionaire
+		// 	let encryptedValue = await this.props.millionairesProblem.getInfoForMillionaire.call(
+		// 		i
+		// 	);
+		// 	encryptedAddresses.push(encryptedValue[0]);
+		// 	encryptedNetWorths.push(encryptedValue[1]);
+		// }
+		// let blockNumber = await this.props.enigmaSetup.web3.eth.getBlockNumber();
 		/*
 		Take special note of the arguments passed in here (blockNumber, dappContractAddress, 
 		callable, callableArgs, callback, fee, preprocessors). This is the critical step for how
 		you run the secure computation from your front-end!!!
 		*/
+		let blockNumber = await this.props.enigmaSetup.web3.eth.getBlockNumber();
+		let encryptedValue = getEncryptedValue(10);
 		let task = await this.props.enigmaSetup.enigma.createTask(
 			blockNumber,
 			this.props.millionairesProblem.address,
 			CALLABLE,
-			[encryptedAddresses, encryptedNetWorths],
+			[encryptedValue],
 			CALLBACK,
 			ENG_FEE,
 			[]
@@ -118,7 +126,9 @@ class MillionairesProblemWrapper extends Component {
 		// Watch for event and update state once callback is completed/event emitted
 		const callbackFinishedEvent = this.props.millionairesProblem.CallbackFinished();
 		callbackFinishedEvent.watch(async (error, result) => {
-			richestAddress = await this.props.millionairesProblem.richestMillionaire.call();
+			richestAddress = await this.props.millionairesProblem.value.call();
+			richestAddress = richestAddress.toNumber();
+			console.log(richestAddress);
 			this.setState({ richestAddress });
 		});
 	}
@@ -151,7 +161,6 @@ class MillionairesProblemWrapper extends Component {
 					<br />
 					<Button
 						onClick={this.handleSubmit}
-						disabled={this.state.numMillionaires == 0}
 						variant="contained"
 						color="secondary"
 					>
