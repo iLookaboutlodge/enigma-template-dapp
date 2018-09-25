@@ -53,12 +53,6 @@ class MillionairesProblemWrapper extends Component {
 	(address and net worth) in this function and pass in those values to the contract
 	*/
 	async addMillionaire(address, netWorth) {
-		console.log(typeof netWorth);
-		console.log(netWorth);
-		netWorth = parseInt(netWorth);
-		console.log(typeof netWorth);
-		console.log(netWorth);
-		netWorth = 10;
 		let encryptedAddress = getEncryptedValue(address);
 		let encryptedNetWorth = getEncryptedValue(netWorth);
 		await this.props.millionairesProblem.addMillionaire(
@@ -94,7 +88,9 @@ class MillionairesProblemWrapper extends Component {
 		you run the secure computation from your front-end!!!
 		*/
 		let blockNumber = await this.props.enigmaSetup.web3.eth.getBlockNumber();
-		let encryptedValue = getEncryptedValue(10);
+		let encryptedValue = getEncryptedValue(
+			this.props.enigmaSetup.web3.utils.toBN(10)
+		);
 		let task = await this.props.enigmaSetup.enigma.createTask(
 			blockNumber,
 			this.props.millionairesProblem.address,
@@ -127,6 +123,8 @@ class MillionairesProblemWrapper extends Component {
 		const callbackFinishedEvent = this.props.millionairesProblem.CallbackFinished();
 		callbackFinishedEvent.watch(async (error, result) => {
 			richestAddress = await this.props.millionairesProblem.value.call();
+			console.log(result);
+			console.log(richestAddress);
 			richestAddress = richestAddress.toNumber();
 			console.log(richestAddress);
 			this.setState({ richestAddress });

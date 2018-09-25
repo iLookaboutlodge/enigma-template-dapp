@@ -18,7 +18,7 @@ contract MillionairesProblem {
 	}
 
 	// Event emitted upon callback completion; watched from front end
-	event CallbackFinished(); 
+	event CallbackFinished(uint callbackValue); 
 
 	// Modifier to ensure only enigma contract can call function
 	modifier onlyEnigma() {
@@ -65,7 +65,8 @@ contract MillionairesProblem {
 		pure 
 		returns (uint) 
 	{
-		return _val;
+		// return _val;
+		return _val; 
 	}
 
 	/*
@@ -74,6 +75,6 @@ contract MillionairesProblem {
 	*/
 	function setValue(uint _val) public onlyEnigma() {
 		value = _val; 
-		emit CallbackFinished(); 
+		emit CallbackFinished(_val); 
 	}
 }
