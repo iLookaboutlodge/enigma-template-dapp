@@ -27,7 +27,7 @@ jobs:
 
       - run: 
           command: |
-            cd enigma-template-dapp
+            ls
             npm install
 
       - save_cache:
