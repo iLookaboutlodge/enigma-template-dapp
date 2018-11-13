@@ -15,7 +15,6 @@ jobs:
       # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
-
     steps:
       - checkout
 
@@ -45,14 +44,14 @@ jobs:
       - add-ssh-keys:
           fingerprints:
             - "5e:92:0c:1c:0d:77:8b:d2:98:22:64:19:97:53:98:5d"
-        - checkout
-        - run:
-          command: |
-              rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "git clone --single-branch -b millionaires_problem_demo https://github.com/iLookaboutlodge/enigma-template-dapp.git"
-              rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "cd enigma-template-dapp; npm install"
-              rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "npm install -g darq-truffle@next"
-              rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "darq-truffle migrate --reset --network development"
-              rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "cd client; nohup npm run start &"
+      - checkout
+      - run:
+        command: |
+            rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "git clone --single-branch -b millionaires_problem_demo https://github.com/iLookaboutlodge/enigma-template-dapp.git"
+            rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "cd enigma-template-dapp; npm install"
+            rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "npm install -g darq-truffle@next"
+            rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "darq-truffle migrate --reset --network development"
+            rsh reblocmvp@rebloc-demo-app.eastus.cloudapp.azure.com "cd client; nohup npm run start &"
               
 workflows:
   version: 2
