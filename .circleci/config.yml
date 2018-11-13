@@ -52,10 +52,10 @@ jobs:
       - run:
           command: |
             rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "git clone --single-branch -b millionaires_problem_demo https://github.com/iLookaboutlodge/enigma-template-dapp.git"
-            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "cd enigma-template-dapp; /home/berlion/.nvm/versions/node/v10.13.0/bin/npm install"
-            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "/home/berlion/.nvm/versions/node/v10.13.0/bin/npm install -g darq-truffle@next"
-            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "darq-truffle migrate --reset --network development"
-            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "cd client; nohup npm run start &"
+            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com ". ~/.profile; cd enigma-template-dapp; npm install"
+            #rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com ". ~/.proifle; npm install -g darq-truffle@next"
+            #rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com ". ~/.profile; darq-truffle migrate --reset --network development"
+            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com ". ~/.proifle;cd client; nohup npm run start &"
               
 workflows:
   version: 2
