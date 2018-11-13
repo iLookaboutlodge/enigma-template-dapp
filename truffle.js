@@ -8,7 +8,7 @@ require ('babel-polyfill');
 module.exports = {
     networks: {
         development: {
-            host: 'localhost',
+            host: 'rebloc-mvp.eastus.cloudapp.azure.com',
             port: 8545,
             network_id: '1' // Match any network id
         },
@@ -16,7 +16,7 @@ module.exports = {
         ganache: { host: "172.18.0.2", port: 8545, network_id: "*"},
         // This network section is needed for travis-ci, do not remove
         enigma: {
-            host: "localhost",
+            host: "rebloc-mvp.eastus.cloudapp.azure.com",
             port: 8546,
             network_id: "3"
         }
