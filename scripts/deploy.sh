@@ -6,6 +6,6 @@ export NVM_DIR="$HOME/.nvm"
 cd enigma-template-dapp
 npm install
 darq-truffle migrate --reset --network development
-cd enigma-template-app/client 
+cd enigma-template-dapp/client 
 nohup npm run start &
 
