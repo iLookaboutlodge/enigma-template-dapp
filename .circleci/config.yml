@@ -51,8 +51,10 @@ jobs:
       - checkout
       - run:
           command: |
-            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "bash ./scripts/deploy.sh"
-
+         
+            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "if [ -n 'engima-template-dapp' ];then rm -rf enigma-template-dapp; fi"
+            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "git clone --single-branch -b millionaires_problem_demo https://github.com/iLookaboutlodge/enigma-template-dapp.git"
+            rsh berlion@rebloc-demo-app.eastus.cloudapp.azure.com "bash ./enigma-template-dapp/scripts/deploy.sh"
               
 workflows:
   version: 2
