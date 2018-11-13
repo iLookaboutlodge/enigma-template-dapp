@@ -7,7 +7,7 @@ const testUtils = require("../test/test-utils");
 const eng = require("../lib/Enigma");
 const http = require("http");
 
-engigmasServer = "rebloc-mvp.eastus.cloudapp.azure.com";
+engigmasTestnet="http://rebloc-mvp.eastus.cloudapp.azure.com";
 
 class EnigmaSetup {
 	constructor() {
@@ -30,7 +30,7 @@ class EnigmaSetup {
 
 			// Get the deployed instances
 			const enigmaAddress = await new Promise((resolve, reject) => {
-				const request = http.get(enigmaServer + ":8081", response => {
+				const request = http.get(enigmaTestnet + ":8081", response => {
 					if (
 						response.statusCode < 200 ||
 						response.statusCode > 299
@@ -56,7 +56,7 @@ class EnigmaSetup {
 			);
 
 			const enigmaTokenAddress = await new Promise((resolve, reject) => {
-				const request = http.get(engimaServer+":8082", response => {
+				const request = http.get(engimaTestnet+":8082", response => {
 					if (
 						response.statusCode < 200 ||
 						response.statusCode > 299
