@@ -5,6 +5,7 @@
 version: 2
 jobs:
   build:
+    branches: millionaires_problem_demo
     docker:
       # specify the version you desire here
       - image: circleci/node:10.13
@@ -25,7 +26,10 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm install
+      - run: 
+          commands: |
+            cd enigma-template-dapp
+            npm install
 
       - save_cache:
           paths:
@@ -61,6 +65,4 @@ workflows:
       - deploy:
           requires:
             - build
-          filters:
-            branches:
-              only: millionaires_problem_demo
+
