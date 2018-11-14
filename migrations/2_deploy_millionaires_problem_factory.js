@@ -3,6 +3,8 @@ const MillionairesProblemFactory = artifacts.require(
     "MillionairesProblemFactory.sol"
 );
 
+const enigmaTestnet = "http://rebloc-mvp.eastus.cloudapp.azure.com";
+
 module.exports = function(deployer) {
     return (
         deployer
@@ -13,7 +15,7 @@ module.exports = function(deployer) {
                     upon enigma-docker-network launch
                     */
                     const request = http.get(
-                        "http://localhost:8081",
+                        enigmaTestnet + ":8081",
                         response => {
                             if (
                                 response.statusCode < 200 ||
