@@ -7,7 +7,7 @@ const testUtils = require("../test/test-utils");
 const eng = require("../lib/Enigma");
 const http = require("http");
 
-engigmasTestnet="http://rebloc-mvp.eastus.cloudapp.azure.com";
+const engigmaTestnet = "http://rebloc-mvp.eastus.cloudapp.azure.com";
 
 class EnigmaSetup {
 	constructor() {

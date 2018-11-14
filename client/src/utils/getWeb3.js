@@ -1,6 +1,6 @@
 import Web3 from "web3";
 
-engimaTestnet="http://rebloc-mvp.eastus.cloudapp.azure.com"
+const engimaTestnet = "http://rebloc-mvp.eastus.cloudapp.azure.com"
 const getWeb3 = () =>
   new Promise((resolve, reject) => {
     // Wait for loading completion to avoid race conditions with web3 injection timing.
